@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>春分 - 幼儿园课件</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            overflow: hidden;
+            background: #e8f5e9;
+        }
+
+        /* 幻灯片容器 */
+        .slideshow {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+            padding: 40px;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* 导航按钮 */
+        .nav {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .nav button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: transform 0.2s;
+        }
+
+        .nav button:hover {
+            transform: scale(1.1);
+        }
+
+        .page-indicator {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #ccc;
+            transition: background 0.3s;
+        }
+
+        .dot.active {
+            background: #4CAF50;
+        }
+
+        /* ========== 第1页：封面 ========== */
+        .slide-1 {
+            background: linear-gradient(180deg, #87CEEB 0%, #98FB98 60%, #90EE90 100%);
+        }
+
+        .slide-1 .sun {
+            width: 120px;
+            height: 120px;
+            background: #FFD700;
+            border-radius: 50%;
+            box-shadow: 0 0 60px #FFD700, 0 0 120px rgba(255, 215, 0, 0.3);
+            animation: sunPulse 3s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes sunPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 60px #FFD700; }
+            50% { transform: scale(1.1); box-shadow: 0 0 80px #FFD700, 0 0 120px rgba(255, 215, 0, 0.4); }
+        }
+
+        .slide-1 h1 {
+            font-size: 80px;
+            color: #2E7D32;
+            text-shadow: 3px 3px 0 #fff;
+            margin-bottom: 10px;
+        }
+
+        .slide-1 .subtitle {
+            font-size: 28px;
+            color: #558B2F;
+            margin-bottom: 30px;
+        }
+
+        .slide-1 .flowers {
+            font-size: 50px;
+            animation: sway 2s ease-in-out infinite;
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        /* ========== 第2页：春分是什么 ========== */
+        .slide-2 {
+            background: linear-gradient(180deg, #E3F2FD 0%, #FFF9C4 100%);
+        }
+
+        .slide-2 h2 {
+            font-size: 52px;
+            color: #F57F17;
+            margin-bottom: 40px;
+        }
+
+        .equinox-demo {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .half-box {
+            width: 180px;
+            height: 220px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .day-box {
+            background: linear-gradient(135deg, #FFB300, #FF8F00);
+        }
+
+        .night-box {
+            background: linear-gradient(135deg, #1A237E, #4A148C);
+        }
+
+        .half-box .icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+
+        .equals {
+            font-size: 60px;
+            color: #E65100;
+            font-weight: bold;
+            animation: bounce 1.5s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .slide-2 .explain {
+            font-size: 30px;
+            color: #5D4037;
+            background: rgba(255,255,255,0.7);
+            padding: 20px 40px;
+            border-radius: 20px;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        /* ========== 第3页：春分的日期 ========== */
+        .slide-3 {
+            background: linear-gradient(180deg, #FCE4EC, #F3E5F5);
+        }
+
+        .slide-3 h2 {
+            font-size: 52px;
+            color: #AD1457;
+            margin-bottom: 30px;
+        }
+
+        .calendar {
+            background: #fff;
+            border-radius: 24px;
+            padding: 30px 50px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .calendar .month {
+            font-size: 36px;
+            color: #C62828;
+            margin-bottom: 10px;
+        }
+
+        .calendar .date {
+            font-size: 100px;
+            font-weight: bold;
+            color: #E91E63;
+        }
+
+        .calendar .day-text {
+            font-size: 24px;
+            color: #888;
+        }
+
+        .slide-3 .tip {
+            font-size: 28px;
+            color: #6A1B9A;
+            background: rgba(255,255,255,0.7);
+            padding: 16px 32px;
+            border-radius: 16px;
+        }
+
+        /* ========== 第4页：春天来了 ========== */
+        .slide-4 {
+            background: linear-gradient(180deg, #E8F5E9, #C8E6C9);
+        }
+
+        .slide-4 h2 {
+            font-size: 52px;
+            color: #2E7D32;
+            margin-bottom: 30px;
+        }
+
+        .nature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            max-width: 700px;
+        }
+
+        .nature-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+
+        .nature-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .nature-card .card-icon {
+            font-size: 64px;
+            margin-bottom: 12px;
+        }
+
+        .nature-card .card-text {
+            font-size: 26px;
+            color: #33691E;
+            font-weight: bold;
+        }
+
+        .nature-card .card-desc {
+            font-size: 18px;
+            color: #888;
+            margin-top: 6px;
+        }
+
+        /* ========== 第5页：春分习俗 ========== */
+        .slide-5 {
+            background: linear-gradient(180deg, #FFF8E1, #FFECB3);
+        }
+
+        .slide-5 h2 {
+            font-size: 52px;
+            color: #E65100;
+            margin-bottom: 30px;
+        }
+
+        .customs {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 900px;
+        }
+
+        .custom-item {
+            background: #fff;
+            border-radius: 24px;
+            padding: 28px 24px;
+            width: 250px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+
+        .custom-item .custom-icon {
+            font-size: 64px;
+            margin-bottom: 12px;
+        }
+
+        .custom-item h3 {
+            font-size: 28px;
+            color: #BF360C;
+            margin-bottom: 8px;
+        }
+
+        .custom-item p {
+            font-size: 18px;
+            color: #777;
+            line-height: 1.6;
+        }
+
+        /* ========== 第6页：竖蛋游戏 ========== */
+        .slide-6 {
+            background: linear-gradient(180deg, #E0F7FA, #B2EBF2);
+            padding-top: 20px !important;
+            padding-bottom: 120px !important;
+        }
+
+        .slide-6 h2 {
+            font-size: 48px;
+            color: #00695C;
+            margin-bottom: 8px;
+        }
+
+        .game-hint {
+            font-size: 22px;
+            color: #00897B;
+            margin-bottom: 10px;
+        }
+
+        .game-container {
+            position: relative;
+            width: 500px;
+            height: 420px;
+            cursor: none;
+        }
+
+        .game-canvas {
+            border-radius: 24px;
+            background: linear-gradient(180deg, #E0F7FA, #fff);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .game-ui {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-top: 12px;
+        }
+
+        .progress-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-label {
+            font-size: 20px;
+            color: #00695C;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .countdown-display {
+            font-size: 32px;
+            font-weight: bold;
+            color: #E65100;
+            min-width: 100px;
+            text-align: center;
+            transition: color 0.3s;
+        }
+
+        .countdown-display.urgent {
+            color: #F44336;
+            animation: pulseText 0.5s ease-in-out infinite;
+        }
+
+        .countdown-display.safe {
+            color: #4CAF50;
+        }
+
+        .countdown-display.done {
+            color: #2E7D32;
+            font-size: 28px;
+        }
+
+        @keyframes pulseText {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .game-score {
+            font-size: 22px;
+            color: #E65100;
+            font-weight: bold;
+        }
+
+        .game-btn {
+            padding: 12px 32px;
+            border-radius: 30px;
+            border: none;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            background: linear-gradient(135deg, #26A69A, #00897B);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: transform 0.2s;
+        }
+
+        .game-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* ========== 第7页：春分儿歌 ========== */
+        .slide-7 {
+            background: linear-gradient(180deg, #F3E5F5, #E1BEE7);
+        }
+
+        .slide-7 h2 {
+            font-size: 52px;
+            color: #7B1FA2;
+            margin-bottom: 30px;
+        }
+
+        .poem-box {
+            background: #fff;
+            border-radius: 24px;
+            padding: 40px 60px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            max-width: 600px;
+        }
+
+        .poem-box .line {
+            font-size: 32px;
+            color: #4A148C;
+            line-height: 2.2;
+            text-align: center;
+        }
+
+        .poem-box .note {
+            font-size: 16px;
+            color: #aaa;
+            display: inline;
+        }
+
+        .music-notes {
+            font-size: 40px;
+            animation: floatNotes 2s ease-in-out infinite;
+            margin-bottom: 10px;
+        }
+
+        @keyframes floatNotes {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-15px) rotate(10deg); }
+        }
+
+        /* ========== 第8页：小测验 ========== */
+        .slide-8 {
+            background: linear-gradient(180deg, #E8EAF6, #C5CAE9);
+        }
+
+        .slide-8 h2 {
+            font-size: 52px;
+            color: #283593;
+            margin-bottom: 30px;
+        }
+
+        .quiz-box {
+            background: #fff;
+            border-radius: 24px;
+            padding: 36px 48px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            max-width: 650px;
+            width: 100%;
+        }
+
+        .question {
+            font-size: 28px;
+            color: #1A237E;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .option-btn {
+            padding: 18px 28px;
+            border-radius: 16px;
+            border: 3px solid #C5CAE9;
+            background: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .option-btn:hover {
+            border-color: #5C6BC0;
+            background: #E8EAF6;
+        }
+
+        .option-btn.correct {
+            border-color: #4CAF50;
+            background: #E8F5E9;
+        }
+
+        .option-btn.wrong {
+            border-color: #F44336;
+            background: #FFEBEE;
+        }
+
+        .quiz-result {
+            text-align: center;
+            font-size: 30px;
+            margin-top: 16px;
+            min-height: 40px;
+        }
+
+        /* ========== 第9页：结束 ========== */
+        .slide-9 {
+            background: linear-gradient(180deg, #C8E6C9, #A5D6A7, #81C784);
+        }
+
+        .slide-9 h1 {
+            font-size: 64px;
+            color: #1B5E20;
+            margin-bottom: 20px;
+        }
+
+        .slide-9 .end-text {
+            font-size: 30px;
+            color: #2E7D32;
+            margin-bottom: 30px;
+        }
+
+        .end-icons {
+            font-size: 60px;
+            animation: celebrate 1s ease-in-out infinite;
+        }
+
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        /* 蝴蝶飞舞动画 */
+        .butterfly {
+            position: fixed;
+            font-size: 32px;
+            animation: fly 8s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .butterfly:nth-child(1) { top: 15%; left: 5%; animation-delay: 0s; }
+        .butterfly:nth-child(2) { top: 25%; right: 8%; animation-delay: 2s; }
+        .butterfly:nth-child(3) { bottom: 20%; left: 10%; animation-delay: 4s; }
+
+        @keyframes fly {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(40px, -30px) rotate(10deg); }
+            50% { transform: translate(80px, 0) rotate(0deg); }
+            75% { transform: translate(40px, 30px) rotate(-10deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 飞舞的蝴蝶装饰 -->
+<div class="butterfly">🦋</div>
+<div class="butterfly">🦋</div>
+<div class="butterfly">🦋</div>
+
+<div class="slideshow">
+
+    <!-- 第1页：封面 -->
+    <div class="slide slide-1 active" data-index="0">
+        <div class="sun"></div>
+        <h1>春 分</h1>
+        <p class="subtitle">二十四节气 · 春天的故事</p>
+        <div class="flowers">🌸 🌷 🌼 🌻 🌺</div>
+    </div>
+
+    <!-- 第2页：春分是什么 -->
+    <div class="slide slide-2" data-index="1">
+        <h2>🌍 春分是什么？</h2>
+        <div class="equinox-demo">
+            <div class="half-box day-box">
+                <div class="icon">☀️</div>
+                白天
+            </div>
+            <div class="equals">=</div>
+            <div class="half-box night-box">
+                <div class="icon">🌙</div>
+                黑夜
+            </div>
+        </div>
+        <div class="explain">
+            春分这一天，<strong>白天和黑夜一样长</strong>哦！<br>
+            太阳公公刚好照在地球的中间 🌏
+        </div>
+    </div>
+
+    <!-- 第3页：春分的日期 -->
+    <div class="slide slide-3" data-index="2">
+        <h2>📅 春分是哪一天？</h2>
+        <div class="calendar">
+            <div class="month">三 月</div>
+            <div class="date">20</div>
+            <div class="day-text">或者 3月21日</div>
+        </div>
+        <div class="tip">
+            📌 每年的3月20日或21日就是春分啦！
+        </div>
+    </div>
+
+    <!-- 第4页：春天来了 -->
+    <div class="slide slide-4" data-index="3">
+        <h2>🌱 春分到了，大自然有什么变化？</h2>
+        <div class="nature-grid">
+            <div class="nature-card">
+                <div class="card-icon">🌸</div>
+                <div class="card-text">花儿开了</div>
+                <div class="card-desc">桃花、杏花、油菜花</div>
+            </div>
+            <div class="nature-card">
+                <div class="card-icon">🐦</div>
+                <div class="card-text">燕子飞回来了</div>
+                <div class="card-desc">从南方飞回北方</div>
+            </div>
+            <div class="nature-card">
+                <div class="card-icon">🌿</div>
+                <div class="card-text">小草变绿了</div>
+                <div class="card-desc">大地穿上绿衣裳</div>
+            </div>
+            <div class="nature-card">
+                <div class="card-icon">🦗</div>
+                <div class="card-text">小虫子出来了</div>
+                <div class="card-desc">蝴蝶、蜜蜂忙采蜜</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第5页：春分习俗 -->
+    <div class="slide slide-5" data-index="4">
+        <h2>🎊 春分有什么好玩的？</h2>
+        <div class="customs">
+            <div class="custom-item">
+                <div class="custom-icon">🥚</div>
+                <h3>竖鸡蛋</h3>
+                <p>春分这天最容易把鸡蛋竖起来哦！</p>
+            </div>
+            <div class="custom-item">
+                <div class="custom-icon">🪁</div>
+                <h3>放风筝</h3>
+                <p>春风吹来，最适合放风筝啦！</p>
+            </div>
+            <div class="custom-item">
+                <div class="custom-icon">🌾</div>
+                <h3>春耕播种</h3>
+                <p>农民伯伯开始种庄稼了！</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第6页：竖蛋游戏（互动） -->
+    <div class="slide slide-6" data-index="5">
+        <h2>🥚 竖鸡蛋小游戏</h2>
+        <p class="game-hint" id="game-hint">移动鼠标来平衡鸡蛋，保持3秒就成功啦！</p>
+        <div class="game-container" id="game-container">
+            <canvas class="game-canvas" id="eggCanvas" width="500" height="420"></canvas>
+        </div>
+        <div class="game-ui">
+            <div class="progress-wrapper">
+                <span class="progress-label">坚持：</span>
+                <div class="countdown-display" id="countdown-display">3.0 秒</div>
+            </div>
+            <span class="game-score" id="game-score">成功：0 次</span>
+            <button class="game-btn" onclick="resetEggGame()">重新开始</button>
+        </div>
+    </div>
+
+    <!-- 第7页：儿歌 -->
+    <div class="slide slide-7" data-index="6">
+        <div class="music-notes">🎵 🎶 🎵</div>
+        <h2>🎤 春分儿歌</h2>
+        <div class="poem-box">
+            <div class="line">春分到，春分到，</div>
+            <div class="line">白天黑夜一样好。</div>
+            <div class="line">花儿笑，鸟儿叫，</div>
+            <div class="line">小朋友们蹦蹦跳。</div>
+            <div class="line">竖鸡蛋，放风筝，</div>
+            <div class="line">春天来了多美妙！</div>
+        </div>
+    </div>
+
+    <!-- 第8页：小测验 -->
+    <div class="slide slide-8" data-index="7">
+        <h2>🧠 小测验时间！</h2>
+        <div class="quiz-box">
+            <div class="question" id="quiz-question">春分这一天，白天和黑夜哪个更长？</div>
+            <div class="options" id="quiz-options">
+                <button class="option-btn" onclick="checkAnswer(this, false)">A. 白天更长 ☀️</button>
+                <button class="option-btn" onclick="checkAnswer(this, true)">B. 一样长 ⚖️</button>
+                <button class="option-btn" onclick="checkAnswer(this, false)">C. 黑夜更长 🌙</button>
+            </div>
+            <div class="quiz-result" id="quiz-result"></div>
+        </div>
+    </div>
+
+    <!-- 第9页：结束 -->
+    <div class="slide slide-9" data-index="8">
+        <div class="end-icons">🌸 🌈 🌸</div>
+        <h1>真棒！</h1>
+        <p class="end-text">小朋友们，春天来了，<br>让我们一起去感受春天吧！</p>
+        <div class="flowers" style="font-size:50px;">🌻🌷🌸🌼🌺🌹</div>
+    </div>
+
+</div>
+
+<!-- 页面指示器 -->
+<div class="page-indicator" id="dots"></div>
+
+<!-- 导航按钮 -->
+<div class="nav">
+    <button onclick="prevSlide()">⬅️</button>
+    <button onclick="nextSlide()">➡️</button>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    // 生成页面指示点
+    const dotsContainer = document.getElementById('dots');
+    for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.onclick = () => goToSlide(i);
+        dotsContainer.appendChild(dot);
+    }
+
+    function goToSlide(index) {
+        slides[currentSlide].classList.remove('active');
+        document.querySelectorAll('.dot')[currentSlide].classList.remove('active');
+        currentSlide = index;
+        slides[currentSlide].classList.add('active');
+        document.querySelectorAll('.dot')[currentSlide].classList.add('active');
+    }
+
+    function nextSlide() {
+        if (currentSlide < totalSlides - 1) {
+            goToSlide(currentSlide + 1);
+        }
+    }
+
+    function prevSlide() {
+        if (currentSlide > 0) {
+            goToSlide(currentSlide - 1);
+        }
+    }
+
+    // 键盘导航
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+            e.preventDefault();
+            nextSlide();
+        }
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevSlide();
+        }
+    });
+
+    // 触摸滑动支持
+    let touchStartX = 0;
+    document.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+    });
+
+    document.addEventListener('touchend', (e) => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) nextSlide();
+            else prevSlide();
+        }
+    });
+
+    // ========== 竖蛋小游戏 ==========
+    const eggGame = {
+        canvas: null,
+        ctx: null,
+        angle: 0,
+        angularVel: 0,
+        mouseX: 250,
+        mouseInCanvas: false,
+        balanceTime: 0,
+        balanceNeeded: 5,
+        successCount: 0,
+        state: 'countdown',  // countdown / playing / success / fallen
+        particles: [],
+        handY: 0,
+        tableY: 330,
+        eggH: 120,
+        eggW: 80,
+        countdownNum: 3,
+        countdownTimer: 0,
+        countdownScale: 1,
+    };
+
+    function initEggGame() {
+        eggGame.canvas = document.getElementById('eggCanvas');
+        eggGame.ctx = eggGame.canvas.getContext('2d');
+
+        const container = document.getElementById('game-container');
+
+        container.addEventListener('mousemove', (e) => {
+            const rect = eggGame.canvas.getBoundingClientRect();
+            eggGame.mouseX = e.clientX - rect.left;
+            eggGame.handY = e.clientY - rect.top;
+            eggGame.mouseInCanvas = true;
+        });
+
+        container.addEventListener('mouseleave', () => {
+            eggGame.mouseInCanvas = false;
+        });
+
+        container.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const rect = eggGame.canvas.getBoundingClientRect();
+            eggGame.mouseX = e.touches[0].clientX - rect.left;
+            eggGame.handY = e.touches[0].clientY - rect.top;
+            eggGame.mouseInCanvas = true;
+        }, { passive: false });
+
+        container.addEventListener('touchend', () => {
+            eggGame.mouseInCanvas = false;
+        });
+
+        resetEggGame();
+        requestAnimationFrame(updateEggGame);
+    }
+
+    function resetEggGame() {
+        eggGame.angle = 0;
+        eggGame.angularVel = 0;
+        eggGame.balanceTime = 0;
+        eggGame.state = 'countdown';
+        eggGame.particles = [];
+        eggGame.countdownNum = 3;
+        eggGame.countdownTimer = 0;
+        eggGame.countdownScale = 1;
+        document.getElementById('game-hint').textContent = '准备好了吗？鸡蛋马上要开始晃啦！';
+        const cd = document.getElementById('countdown-display');
+        cd.textContent = '5.0 秒';
+        cd.className = 'countdown-display';
+    }
+
+    let lastTime = 0;
+
+    function updateEggGame(timestamp) {
+        requestAnimationFrame(updateEggGame);
+
+        const g = eggGame;
+        const ctx = g.ctx;
+        const W = g.canvas.width;
+        const H = g.canvas.height;
+
+        const dt = lastTime ? Math.min((timestamp - lastTime) / 1000, 0.05) : 1/60;
+        lastTime = timestamp;
+
+        // 不在第6页时只画静态场景
+        if (currentSlide !== 5) {
+            drawEggScene(ctx, W, H, g);
+            return;
+        }
+
+        // === 倒计时阶段 ===
+        if (g.state === 'countdown') {
+            g.countdownTimer += dt;
+            // 数字缩放动画：从大变小
+            g.countdownScale = 1 + Math.max(0, 1 - g.countdownTimer * 2) * 0.8;
+
+            if (g.countdownTimer >= 1) {
+                g.countdownTimer = 0;
+                g.countdownNum--;
+                if (g.countdownNum < 0) {
+                    g.state = 'playing';
+                    // 给一个随机的初始小推力
+                    g.angularVel = (Math.random() - 0.5) * 0.6;
+                    document.getElementById('game-hint').textContent = '快！移动鼠标扶住鸡蛋，别让它倒！';
+                }
+            }
+        }
+
+        // === 游戏进行中 ===
+        if (g.state === 'playing') {
+            // 累计游戏时间
+            g.balanceTime += dt;
+
+            // 重力（降低难度）
+            const gravity = 1.8;
+            g.angularVel += Math.sin(g.angle) * gravity * dt;
+
+            // 轻微随机扰动
+            g.angularVel += (Math.random() - 0.5) * 0.15 * dt;
+
+            // 鼠标控制 — 加大扶蛋的力度，更容易操控
+            if (g.mouseInCanvas) {
+                const centerX = W / 2;
+                const mouseOffset = (g.mouseX - centerX) / (W / 2);
+                const force = -mouseOffset * 5.0;
+                g.angularVel += force * dt;
+                g.angularVel -= g.angle * 2.0 * dt;
+            }
+
+            g.angularVel *= 0.95;
+            g.angle += g.angularVel * dt;
+
+            // 倒计时显示
+            const remaining = Math.max(0, g.balanceNeeded - g.balanceTime);
+            const cd = document.getElementById('countdown-display');
+            cd.textContent = remaining.toFixed(1) + ' 秒';
+
+            if (remaining <= 1) {
+                cd.className = 'countdown-display safe';
+            } else if (remaining <= 2) {
+                cd.className = 'countdown-display urgent';
+            } else {
+                cd.className = 'countdown-display';
+            }
+
+            // 坚持5秒成功！
+            if (g.balanceTime >= g.balanceNeeded) {
+                g.state = 'success';
+                g.angle = 0;
+                g.angularVel = 0;
+                g.successCount++;
+                document.getElementById('game-score').textContent = '成功：' + g.successCount + ' 次';
+                document.getElementById('game-hint').textContent = '🎉 太棒了！鸡蛋竖起来了！';
+                const cdDone = document.getElementById('countdown-display');
+                cdDone.textContent = '成功！';
+                cdDone.className = 'countdown-display done';
+                for (let i = 0; i < 50; i++) {
+                    g.particles.push({
+                        x: W / 2,
+                        y: g.tableY - g.eggH,
+                        vx: (Math.random() - 0.5) * 10,
+                        vy: -Math.random() * 8 - 2,
+                        life: 1,
+                        color: ['#FF6F00','#E91E63','#4CAF50','#2196F3','#FFD700','#9C27B0'][Math.floor(Math.random()*6)],
+                        size: Math.random() * 8 + 4,
+                    });
+                }
+            }
+
+            // 倒了
+            if (Math.abs(g.angle) > 1.2) {
+                g.state = 'fallen';
+                document.getElementById('game-hint').textContent = '😅 鸡蛋倒了！没关系，再来一次！';
+            }
+        }
+
+        // 粒子更新
+        g.particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.15;
+            p.life -= 0.012;
+        });
+        g.particles = g.particles.filter(p => p.life > 0);
+
+        drawEggScene(ctx, W, H, g);
+    }
+
+    function drawEggScene(ctx, W, H, g) {
+        ctx.clearRect(0, 0, W, H);
+
+        // 桌面
+        ctx.fillStyle = '#8D6E63';
+        ctx.fillRect(0, g.tableY, W, H - g.tableY);
+        ctx.fillStyle = '#A1887F';
+        ctx.fillRect(0, g.tableY, W, 4);
+
+        ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < W; i += 40) {
+            ctx.beginPath();
+            ctx.moveTo(i, g.tableY);
+            ctx.lineTo(i, H);
+            ctx.stroke();
+        }
+
+        // 鸡蛋
+        const cx = W / 2;
+        const cy = g.tableY;
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(g.angle);
+
+        // 蛋影
+        ctx.save();
+        ctx.scale(1, 0.3);
+        ctx.beginPath();
+        ctx.arc(0, 10, g.eggW * 0.5 + 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0,0,0,0.1)';
+        ctx.fill();
+        ctx.restore();
+
+        // 蛋体
+        drawEgg(ctx, 0, -g.eggH / 2, g.eggW, g.eggH);
+
+        // 高光
+        ctx.beginPath();
+        ctx.ellipse(-12, -g.eggH * 0.55, 10, 18, -0.3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,0.6)';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(-6, -g.eggH * 0.35, 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,0.4)';
+        ctx.fill();
+
+        // 表情
+        const faceY = -g.eggH * 0.45;
+        if (g.state === 'countdown') {
+            drawFace(ctx, faceY, 'happy');
+        } else if (g.state === 'success') {
+            drawFace(ctx, faceY, 'happy');
+        } else if (g.state === 'fallen') {
+            drawFace(ctx, faceY, 'dizzy');
+        } else {
+            const tension = Math.min(1, Math.abs(g.angle) / 0.8);
+            drawFace(ctx, faceY, 'nervous', tension);
+        }
+
+        ctx.restore();
+
+        // 鼠标手指
+        if (g.mouseInCanvas && g.state === 'playing') {
+            ctx.save();
+            ctx.font = '36px serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('👆', g.mouseX, Math.min(g.handY, g.tableY - 20));
+            ctx.restore();
+        }
+
+        // === 倒计时数字 ===
+        if (g.state === 'countdown') {
+            const label = g.countdownNum > 0 ? g.countdownNum.toString() : '开始！';
+            const fontSize = g.countdownNum > 0 ? 120 : 72;
+            const scale = g.countdownScale;
+
+            ctx.save();
+            ctx.translate(W / 2, g.tableY / 2);
+            ctx.scale(scale, scale);
+            ctx.globalAlpha = Math.min(1, scale - 0.5);
+            ctx.font = 'bold ' + fontSize + 'px "PingFang SC", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            // 数字颜色
+            const colors = { 3: '#F44336', 2: '#FF9800', 1: '#4CAF50', 0: '#2196F3' };
+            ctx.fillStyle = colors[g.countdownNum] || '#2196F3';
+
+            // 白色描边让数字更醒目
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 6;
+            ctx.strokeText(label, 0, 0);
+            ctx.fillText(label, 0, 0);
+
+            ctx.restore();
+        }
+
+        // 庆祝粒子
+        g.particles.forEach(p => {
+            ctx.globalAlpha = p.life;
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        ctx.globalAlpha = 1;
+
+        // 倒了遮罩
+        if (g.state === 'fallen') {
+            ctx.fillStyle = 'rgba(0,0,0,0.3)';
+            ctx.fillRect(0, 0, W, g.tableY);
+            ctx.font = 'bold 40px "PingFang SC", sans-serif';
+            ctx.fillStyle = '#fff';
+            ctx.textAlign = 'center';
+            ctx.fillText('鸡蛋倒啦！', W / 2, g.tableY / 2 - 10);
+            ctx.font = '26px "PingFang SC", sans-serif';
+            ctx.fillText('点「重新开始」再来', W / 2, g.tableY / 2 + 36);
+        }
+
+        // 成功
+        if (g.state === 'success') {
+            ctx.font = 'bold 36px "PingFang SC", sans-serif';
+            ctx.fillStyle = '#2E7D32';
+            ctx.textAlign = 'center';
+            ctx.fillText('🎉 竖起来啦！🎉', W / 2, 50);
+        }
+    }
+
+    function drawEgg(ctx, cx, cy, w, h) {
+        // 用贝塞尔曲线画蛋形
+        ctx.beginPath();
+        ctx.moveTo(cx, cy - h / 2);
+
+        // 右上（蛋窄的一头）
+        ctx.bezierCurveTo(
+            cx + w * 0.35, cy - h / 2,
+            cx + w / 2,    cy - h * 0.15,
+            cx + w / 2,    cy + h * 0.05
+        );
+
+        // 右下（蛋宽的一头）
+        ctx.bezierCurveTo(
+            cx + w / 2,    cy + h * 0.35,
+            cx + w * 0.3,  cy + h / 2,
+            cx,            cy + h / 2
+        );
+
+        // 左下
+        ctx.bezierCurveTo(
+            cx - w * 0.3,  cy + h / 2,
+            cx - w / 2,    cy + h * 0.35,
+            cx - w / 2,    cy + h * 0.05
+        );
+
+        // 左上
+        ctx.bezierCurveTo(
+            cx - w / 2,    cy - h * 0.15,
+            cx - w * 0.35, cy - h / 2,
+            cx,            cy - h / 2
+        );
+
+        // 渐变填充
+        const grad = ctx.createLinearGradient(cx - w/2, cy - h/2, cx + w/2, cy + h/2);
+        grad.addColorStop(0, '#FFFDE7');
+        grad.addColorStop(0.5, '#FFF8E1');
+        grad.addColorStop(1, '#FFE0B2');
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        ctx.strokeStyle = '#E0C68A';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    }
+
+    function drawFace(ctx, faceY, mood, tension) {
+        const eyeSpacing = 14;
+        const eyeY = faceY - 4;
+
+        if (mood === 'happy') {
+            // 开心眼睛 ^_^
+            ctx.lineWidth = 2.5;
+            ctx.strokeStyle = '#5D4037';
+            ctx.lineCap = 'round';
+            [-1, 1].forEach(dir => {
+                ctx.beginPath();
+                ctx.arc(dir * eyeSpacing, eyeY, 6, Math.PI, 0);
+                ctx.stroke();
+            });
+            // 大笑嘴
+            ctx.beginPath();
+            ctx.arc(0, faceY + 10, 10, 0, Math.PI);
+            ctx.fillStyle = '#E91E63';
+            ctx.fill();
+            ctx.stroke();
+            // 腮红
+            ctx.beginPath();
+            ctx.arc(-22, faceY + 6, 6, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255,138,128,0.5)';
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(22, faceY + 6, 6, 0, Math.PI * 2);
+            ctx.fill();
+        } else if (mood === 'dizzy') {
+            // 晕倒 X_X
+            ctx.lineWidth = 2.5;
+            ctx.strokeStyle = '#5D4037';
+            ctx.lineCap = 'round';
+            [-1, 1].forEach(dir => {
+                const ex = dir * eyeSpacing;
+                ctx.beginPath();
+                ctx.moveTo(ex - 5, eyeY - 5);
+                ctx.lineTo(ex + 5, eyeY + 5);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(ex + 5, eyeY - 5);
+                ctx.lineTo(ex - 5, eyeY + 5);
+                ctx.stroke();
+            });
+            // 波浪嘴
+            ctx.beginPath();
+            ctx.moveTo(-10, faceY + 12);
+            ctx.quadraticCurveTo(-5, faceY + 8, 0, faceY + 12);
+            ctx.quadraticCurveTo(5, faceY + 16, 10, faceY + 12);
+            ctx.stroke();
+        } else {
+            // 紧张表情
+            const t = tension || 0;
+            // 眼睛大小随紧张度变化
+            const eyeR = 4 + t * 2;
+            ctx.fillStyle = '#5D4037';
+            [-1, 1].forEach(dir => {
+                ctx.beginPath();
+                ctx.arc(dir * eyeSpacing, eyeY, eyeR, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            // 眼白
+            ctx.fillStyle = '#fff';
+            [-1, 1].forEach(dir => {
+                ctx.beginPath();
+                ctx.arc(dir * eyeSpacing - 1, eyeY - 1, eyeR * 0.35, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // 嘴巴 - 紧张时嘴巴变小变圆
+            if (t > 0.5) {
+                // 惊恐 O 嘴
+                ctx.beginPath();
+                ctx.arc(0, faceY + 12, 5 + t * 3, 0, Math.PI * 2);
+                ctx.fillStyle = '#5D4037';
+                ctx.fill();
+            } else {
+                // 微笑
+                ctx.beginPath();
+                ctx.arc(0, faceY + 8, 8, 0.1, Math.PI - 0.1);
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#5D4037';
+                ctx.stroke();
+            }
+
+            // 紧张时冒汗
+            if (t > 0.4) {
+                ctx.fillStyle = '#4FC3F7';
+                ctx.beginPath();
+                ctx.ellipse(22, eyeY - 6, 3, 5, 0.2, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+    }
+
+    // 初始化游戏
+    initEggGame();
+
+    // 测验功能
+    function checkAnswer(btn, isCorrect) {
+        const buttons = document.querySelectorAll('.option-btn');
+        buttons.forEach(b => b.disabled = true);
+
+        if (isCorrect) {
+            btn.classList.add('correct');
+            document.getElementById('quiz-result').innerHTML = '🎉 回答正确！你真棒！';
+            document.getElementById('quiz-result').style.color = '#4CAF50';
+        } else {
+            btn.classList.add('wrong');
+            buttons[1].classList.add('correct');
+            document.getElementById('quiz-result').innerHTML = '😊 不对哦～春分白天和黑夜一样长！';
+            document.getElementById('quiz-result').style.color = '#F44336';
+        }
+
+        // 3秒后重置
+        setTimeout(() => {
+            buttons.forEach(b => {
+                b.disabled = false;
+                b.classList.remove('correct', 'wrong');
+            });
+            document.getElementById('quiz-result').innerHTML = '';
+        }, 3000);
+    }
+</script>
+
+</body>
+</html>
